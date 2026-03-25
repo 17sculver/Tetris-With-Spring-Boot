@@ -22,6 +22,11 @@ public class GameWebSocketHandler {
     private final Map<String, GameSession> activeSessions = new HashMap<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    // TODO: Implement server-side game loop using @Scheduled to update active game sessions
+    // TODO: Add authentication validation for WebSocket connections
+    // TODO: Implement handlers for: handleRotate, handleHold, handleDrop
+    // TODO: Add game state reconciliation for client-server synchronization
+
     @MessageMapping("/game/{sessionId}/join")
     @SendTo("/topic/game/{sessionId}")
     public GameStateMessage playerJoined(@DestinationVariable String sessionId, 
@@ -41,6 +46,11 @@ public class GameWebSocketHandler {
     public void handleGameMove(@DestinationVariable String sessionId, GameMoveMessage message) {
         message.setTimestamp(System.currentTimeMillis());
 
+        // TODO: Validate move before broadcasting (collision detection, bounds checking)
+        // TODO: Update game state on server (move piece, handle gravity)
+        // TODO: Check for line completion after move
+        // TODO: Validate move signature to prevent cheating
+
         // Broadcast move to opponent
         messagingTemplate.convertAndSend(
                 "/topic/game/" + sessionId,
@@ -51,6 +61,11 @@ public class GameWebSocketHandler {
     @MessageMapping("/game/{sessionId}/update")
     public void updateGameState(@DestinationVariable String sessionId, GameStateMessage message) {
         message.setTimestamp(System.currentTimeMillis());
+
+        // TODO: Validate game state update from client
+        // TODO: Implement server-side game loop for authoritative state management
+        // TODO: Detect and prevent state inconsistencies
+        // TODO: Handle game-over conditions
 
         // Broadcast state update to all players in the session
         messagingTemplate.convertAndSend(

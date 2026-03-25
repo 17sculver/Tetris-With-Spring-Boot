@@ -87,4 +87,15 @@ public class GameService {
         playerOneGames.addAll(playerTwoGames);
         return playerOneGames;
     }
+
+    // TODO: Implement core Tetris game logic methods
+    // TODO: validateMove(String sessionId, Long playerId, GameMove move) - validate piece movement
+    // TODO: detectCollision(int[][] board, Tetrimino piece, int x, int y) - collision detection
+    // TODO: clearCompleteLines(int[][] board) - line clearing and cascading
+    // TODO: generateRandomPiece() - random Tetrimino generation
+    // TODO: calculateScore(int linesCleared, int level) - score calculation with multipliers
+    // TODO: rotatePiece(Tetrimino piece, int rotation) - piece rotation with wall kick
+    // TODO: updateGameStateAfterMove(String sessionId, GameMove move) - server-side game state update
+    // TODO: progressGameLevel(String sessionId) - level progression and speed increase
+    // TODO: checkGameOverCondition(String sessionId) - detect game over state
 }

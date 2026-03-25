@@ -25,8 +25,7 @@ public class GameController {
     public ResponseEntity<GameSession> createGameSession() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        // In a real scenario, you'd lookup the user by username to get their ID
-        // For now, we'll use a placeholder
+        // TODO: Fetch user ID from database using username from authentication
         Long userId = 1L; // This should be fetched from the User entity using username
 
         GameSession gameSession = gameService.createGameSession(userId);
@@ -37,6 +36,7 @@ public class GameController {
     public ResponseEntity<GameSession> joinGameSession(@PathVariable String sessionId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
+        // TODO: Fetch user ID from database using username from authentication
         Long userId = 1L; // This should be fetched from the User entity using username
 
         GameSession gameSession = gameService.joinGameSession(sessionId, userId);
@@ -83,6 +83,7 @@ public class GameController {
     public ResponseEntity<List<GameSession>> getGameHistory() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
+        // TODO: Fetch user ID from database using username from authentication
         Long userId = 1L; // This should be fetched from the User entity using username
 
         List<GameSession> history = gameService.getPlayerGameHistory(userId);

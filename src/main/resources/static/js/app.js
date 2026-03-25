@@ -12,6 +12,14 @@ let gameState = {
     isPaused: false
 };
 
+// TODO: Add current piece state management (position, rotation, type)
+// TODO: Add next piece preview functionality
+// TODO: Add piece spawning and random generation logic
+// TODO: Implement collision detection system
+// TODO: Add line clearing and board compaction logic
+// TODO: Implement score calculation based on lines cleared and level
+// TODO: Add game over detection when pieces reach the top
+
 const API_BASE = '/api';
 const TETRIS_BLOCKS = [
     [[1, 1, 1, 1]],           // I
@@ -277,12 +285,25 @@ function endGame() {
             showSuccess('Game ended');
         });
     }
+    
+    // TODO: Implement proper game end sequence
+    // TODO: Calculate and display final statistics
+    // TODO: Show game summary (duration, final score, lines cleared)
+    // TODO: Update player statistics on server
+    // TODO: Clean up WebSocket subscriptions
+    // TODO: Reset all game state variables
+    // TODO: Return to main menu with transition animation
 }
 
 function pauseGame() {
     gameState.isPaused = !gameState.isPaused;
     const button = event.target;
     button.textContent = gameState.isPaused ? 'Resume' : 'Pause';
+    
+    // TODO: Broadcast pause/resume state to opponent
+    // TODO: Implement synchronized pause (both players must agree)
+    // TODO: Add pause timer to prevent abuse
+    // TODO: Update game timer to account for paused time
 }
 
 // ==================== Game Board ====================
@@ -295,6 +316,10 @@ function initializeGameBoard() {
     gameState.lines = 0;
     gameState.level = 1;
     gameState.gameOver = false;
+    
+    // TODO: Initialize current piece with random Tetromino
+    // TODO: Initialize next piece preview
+    // TODO: Set up piece spawn position (typically top center)
     
     renderGameBoard();
     startGameLoop();
@@ -337,6 +362,11 @@ function renderGameBoard() {
         });
     }
     
+    // TODO: Render current falling piece on the board
+    // TODO: Render ghost piece (preview of where piece will land)
+    // TODO: Add piece rotation animation effects
+    // TODO: Implement different colors for different Tetromino types
+    
     updateScoreDisplay();
 }
 
@@ -350,7 +380,12 @@ function startGameLoop() {
     const gameSpeed = 500 - (gameState.level * 30);
     setInterval(() => {
         if (!gameState.isPaused && !gameState.gameOver && currentSessionId) {
-            // Update game logic here
+            // TODO: Implement core game loop logic
+            // TODO: Apply gravity to current piece
+            // TODO: Detect completed lines and clear them
+            // TODO: Update score and level progression
+            // TODO: Update game speed based on level
+            // TODO: Generate next piece preview
             renderGameBoard();
             broadcastGameState();
         }
@@ -401,6 +436,8 @@ function handleGameMessage(message) {
     
     switch (message.messageType) {
         case 'OPPONENT_MOVE':
+            // TODO: Process opponent's move and update their board state
+            // TODO: Animate opponent's piece movement for visual feedback
             updateOpponentBoard(message);
             break;
         case 'GAME_STATE_UPDATE':
@@ -408,6 +445,8 @@ function handleGameMessage(message) {
             break;
         case 'PLAYER_JOINED':
             showSuccess('Opponent joined!');
+            // TODO: Initialize opponent's game state
+            // TODO: Start synchronized game timer
             break;
         case 'GAME_ENDED':
             handleGameEnd(message);
@@ -416,6 +455,14 @@ function handleGameMessage(message) {
             showError('Opponent disconnected');
             endGame();
             break;
+        case 'PIECE_LOCKED':
+            // TODO: Handle when opponent locks a piece (line clear potential)
+            // TODO: Update opponent's board with new locked piece
+            break;
+        case 'LINES_CLEARED':
+            // TODO: Handle opponent's line clears (may send garbage lines)
+            // TODO: Add garbage lines to player's board from bottom
+            break;
     }
 }
 
@@ -423,6 +470,9 @@ function updateOpponentBoard(message) {
     const opponentCanvas = document.getElementById('opponent-canvas');
     const ctx = opponentCanvas.getContext('2d');
     
+    // TODO: Implement opponent board rendering with piece preview
+    // TODO: Display opponent's active piece and next piece
+    // TODO: Animate opponent's piece movements
     const blockSize = opponentCanvas.width / 10;
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, opponentCanvas.width, opponentCanvas.height);
@@ -534,18 +584,22 @@ function handleKeyPress(event) {
     switch (event.key) {
         case 'ArrowLeft':
             moveMessage.action = 'LEFT';
+            // TODO: Implement left movement logic - check collision before moving
             event.preventDefault();
             break;
         case 'ArrowRight':
             moveMessage.action = 'RIGHT';
+            // TODO: Implement right movement logic - check collision before moving
             event.preventDefault();
             break;
         case 'ArrowDown':
             moveMessage.action = 'DOWN';
+            // TODO: Implement soft drop logic - move piece down faster
             event.preventDefault();
             break;
         case ' ':
             moveMessage.action = 'ROTATE_CW';
+            // TODO: Implement clockwise rotation logic - check collision after rotation
             event.preventDefault();
             break;
         case 'p':
@@ -570,10 +624,23 @@ function handleKeyPress(event) {
 
 function showSuccess(message) {
     console.log('Success:', message);
-    // In a production app, you'd show a toast notification
+    // TODO: Implement proper toast notification system
+    // TODO: Add success message styling and auto-dismiss
 }
 
 function showError(message) {
     console.error('Error:', message);
-    alert(message); // In production, use a toast notification
+    alert(message); // TODO: Replace with proper toast notification system
+    // TODO: Add error message styling and user-friendly display
+    // TODO: Implement error logging and reporting
 }
+
+// TODO: Add utility functions for:
+// TODO: - Tetromino shape definitions and rotation matrices
+// TODO: - Collision detection algorithms
+// TODO: - Line clearing and board compaction
+// TODO: - Score calculation formulas
+// TODO: - Game speed and level progression curves
+// TODO: - Piece spawning and bag randomization (7-bag system)
+// TODO: - Sound effect management
+// TODO: - Animation and particle effects
