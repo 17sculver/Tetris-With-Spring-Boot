@@ -4,11 +4,32 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.*;
 
+/**
+ * User entity representing a player in the multiplayer Tetris game system.
+ * This entity manages user authentication, profile information, and game statistics.
+ * 
+ * Key Features:
+ * - Secure password storage with BCrypt hashing
+ * - Unique username and email constraints for authentication
+ * - Game statistics tracking (high score, games played, wins)
+ * - Online status for matchmaking and real-time features
+ * - Password reset token support for account recovery
+ * 
+ * Database Indexes:
+ * - Single column indexes on username, email, is_online for fast lookups
+ * - Composite indexes for combined queries (username+online, email+online)
+ * - Optimized for authentication, matchmaking, and user management operations
+ */
 @Entity
 @Table(name = "users", indexes = {
-    // TODO: Add database indexes for commonly queried fields (username, email, is_online)
-    // TODO: Consider composite indexes for performance optimization
+    @Index(name = "idx_user_username", columnList = "username"),
+    @Index(name = "idx_user_email", columnList = "email"),
+    @Index(name = "idx_user_is_online", columnList = "is_online"),
+    @Index(name = "idx_user_username_online", columnList = "username, is_online"),
+    @Index(name = "idx_user_email_online", columnList = "email, is_online")
 })
 @Data
 @NoArgsConstructor
@@ -18,16 +39,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // TODO: Add validation annotations (@NotBlank, @Size, @Pattern for username constraints)
-    // TODO: Consider @Column(length = X) for optimal storage
-    @Column(nullable = false, unique = true)
+    // Username validation: not blank, 3-20 chars, alphanumeric with underscore/hyphen
+    @NotBlank(message = "Username is required")
+    @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]+$", message = "Username can only contain letters, numbers, underscores, and hyphens")
+    @Column(nullable = false, unique = true, length = 20)
     private String username;
 
-    // TODO: CRITICAL: Password should be hashed using BCrypt - never store plain text
-    // TODO: Add @JsonIgnore to prevent password from being serialized in responses
-    // TODO: Consider separate field for password reset tokens/salt
+    // Password is now hashed using BCrypt in AuthService
+    // @JsonIgnore prevents password from being serialized in responses
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
+
+    // Separate field for password reset tokens (can be used for password recovery)
+    @JsonIgnore
+    @Column(name = "password_reset_token")
+    private String passwordResetToken;
 
     // TODO: Add validation annotations (@NotBlank, @Email, @Size)
     // TODO: Consider @Column(length = X) for email storage optimization
