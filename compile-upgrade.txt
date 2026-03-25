@@ -1,0 +1,34 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.tetris:tetris-multiplayer >--------------------
+[INFO] Building Tetris Multiplayer Game 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ tetris-multiplayer ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 3 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ tetris-multiplayer ---
+[INFO] Recompiling the module because of added or removed source files.
+[INFO] Compiling 22 source files with javac [debug parameters release 17] to target\classes
+[WARNING] /C:/Users/17scu/OneDrive/Desktop/Development Practice/Tetris Game/Tetris-With-Spring-Boot/src/main/java/com/tetris/config/SecurityConfig.java:[48,17] and() in org.springframework.security.config.annotation.SecurityConfigurerAdapter has been deprecated and marked for removal
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ tetris-multiplayer ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 3 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ tetris-multiplayer ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ tetris-multiplayer ---
+[INFO] skip non existing resourceDirectory C:\Users\17scu\OneDrive\Desktop\Development Practice\Tetris Game\Tetris-With-Spring-Boot\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ tetris-multiplayer ---
+[INFO] No sources to compile
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.584 s
+[INFO] Finished at: 2026-03-24T23:20:14-05:00
+[INFO] ------------------------------------------------------------------------
