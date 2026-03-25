@@ -27,6 +27,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, 
             FilterChain filterChain) throws ServletException, IOException {
 
+        // TODO: Add rate limiting to prevent brute force attacks on token validation
+        // TODO: Add proper exception handling for token validation failures
+        // TODO: Add security event logging (successful/failed authentications, suspicious activity)
+        // TODO: Add token refresh mechanism for expired but valid tokens
+        // TODO: Add proper error responses for expired/invalid tokens instead of silent failure
+        // TODO: Add CORS preflight handling for WebSocket connections
+        // TODO: Add security headers (HSTS, CSP, X-Frame-Options) configuration
+        // TODO: Add request/response size limits for DoS protection
         String jwt = extractJwtFromRequest(request);
 
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {

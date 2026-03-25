@@ -60,6 +60,8 @@
         </dependency>
 
         <!-- MySQL Driver (optional, for production) -->
+        <!-- TODO: Create separate profiles for H2 (dev/test) vs MySQL (prod) to avoid including both drivers -->
+        <!-- TODO: Consider PostgreSQL as alternative to MySQL for better JSON support -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>

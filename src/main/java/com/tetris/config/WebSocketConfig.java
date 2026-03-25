@@ -19,6 +19,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws/tetris")
+                // TODO: Replace wildcard "*" with specific allowed origins for production security
+                // TODO: Add authentication checks for WebSocket connections
+                // TODO: Consider implementing connection limits and rate limiting
                 .setAllowedOrigins("*")
                 .withSockJS();
     }

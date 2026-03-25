@@ -34,12 +34,20 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestHeader("Authorization") String token) {
+        // TODO: Implement proper JWT token blacklisting/invalidation
+        // TODO: Extract token from Authorization header and validate format
+        // TODO: Add token to blacklist or implement token revocation
         // Token handling would be extracted and user identified here
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/validate")
     public ResponseEntity<Boolean> validateToken(@RequestHeader("Authorization") String token) {
+        // TODO: Implement proper JWT token validation using JwtUtil or similar
+        // TODO: Extract token from "Bearer " prefix and validate signature
+        // TODO: Check token expiration and claims
+        // TODO: Verify user exists and is active in database
+        // TODO: Add proper error handling for malformed tokens
         if (token != null && token.startsWith("Bearer ")) {
             // Token validation would happen here
             return ResponseEntity.ok(true);

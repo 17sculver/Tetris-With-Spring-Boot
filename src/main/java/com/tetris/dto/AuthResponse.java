@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthResponse {
+    // TODO: Add validation annotations (@NotNull for required fields)
+    // TODO: Consider using enum for standardized response types
+    // TODO: Add proper error codes instead of generic success/message
     private Boolean success;
     private String message;
     private String token;
