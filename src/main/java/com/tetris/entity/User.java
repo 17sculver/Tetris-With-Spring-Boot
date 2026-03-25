@@ -57,35 +57,35 @@ public class User {
     @Column(name = "password_reset_token")
     private String passwordResetToken;
 
-    // TODO: Add validation annotations (@NotBlank, @Email, @Size)
-    // TODO: Consider @Column(length = X) for email storage optimization
-    @Column(nullable = false, unique = true)
+    // Email validation: not blank, valid email format, max length 255
+    @NotBlank(message = "Email is required")    
+    @Email(message = "Email should be valid")
+    @Size(max = 255, message = "Email must be less than 255 characters")   
+    @Column(nullable = false, unique = true, length = 255)
     private String email;
 
-    // TODO: Add validation annotations (@Min(0), @Max for reasonable score limits)
+    @Min(value = 0, message = "High score cannot be negative")
+    @Max(value = 999999999, message = "High score exceeds maximum limit")
     @Column(name = "high_score")
     private Long highScore = 0L;
 
-    // TODO: Add validation annotations (@Min(0))
-    // TODO: Consider business logic validation (wins <= totalGames)
+    @Min(value = 0, message = "Total games cannot be negative")
     @Column(name = "total_games")
     private Integer totalGames = 0;
 
-    // TODO: Add validation annotations (@Min(0))
+    @Min(value = 0, message = "Wins cannot be negative")
     @Column(name = "wins")
     private Integer wins = 0;
 
     @Column(name = "is_online")
     private Boolean isOnline = false;
 
-    // TODO: Change to proper timestamp type (@Temporal(TemporalType.TIMESTAMP))
-    // TODO: Add @Column(updatable = false) to prevent manual updates
-    // TODO: Consider @CreatedDate with Spring Data auditing
-    @Column(name = "created_at")
+    // Consider @CreatedDate with Spring Data auditing for automatic timestamp management
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Long createdAt;
 
-    // TODO: Add @LastModifiedDate and @Version for optimistic locking with Spring Data auditing
-    // TODO: Add relationships to GameSession (@OneToMany with mappedBy)
+    // Future enhancement: Add @LastModifiedDate and @Version for optimistic locking with Spring Data auditing
+    // Future enhancement: Add @OneToMany relationship to GameSession (mappedBy = "user")
 
     @PrePersist
     protected void onCreate() {
