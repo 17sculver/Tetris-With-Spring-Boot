@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplayer Tetris</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Authentication Section -->
+        <div id="auth-section" class="container">
+            <div class="auth-card">
+                <h1>Multiplayer Tetris</h1>
+                
+                <!-- Login Form -->
+                <div id="login-form" class="form-container">
+                    <h2>Login</h2>
+                    <form onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label for="login-username">Username:</label>
+                            <input type="text" id="login-username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password:</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                    <p class="toggle-form">Don't have an account? <a href="#" onclick="toggleForms()">Register</a></p>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-form" class="form-container hidden">
+                    <h2>Register</h2>
+                    <form onsubmit="handleRegister(event)">
+                        <div class="form-group">
+                            <label for="register-username">Username:</label>
+                            <input type="text" id="register-username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email:</label>
+                            <input type="email" id="register-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Password:</label>
+                            <input type="password" id="register-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm Password:</label>
+                            <input type="password" id="confirm-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                    <p class="toggle-form">Already have an account? <a href="#" onclick="toggleForms()">Login</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Section -->
+        <div id="game-section" class="hidden">
+            <div class="game-container">
+                <header class="game-header">
+                    <div class="user-info">
+                        <span id="current-user">Welcome, Player</span>
+                        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                    </div>
+                </header>
+
+                <div class="main-content">
+                    <!-- Menu -->
+                    <div id="menu-section" class="menu-section">
+                        <h2>Main Menu</h2>
+                        <div class="menu-buttons">
+                            <button class="btn btn-large" onclick="createGame()">Create Game</button>
+                            <button class="btn btn-large" onclick="joinGame()">Join Game</button>
+                            <button class="btn btn-large" onclick="viewStats()">View Statistics</button>
+                            <button class="btn btn-large" onclick="viewHistory()">Game History</button>
+                        </div>
+                    </div>
+
+                    <!-- Game Board -->
+                    <div id="game-board-section" class="hidden game-board-section">
+                        <div class="game-info">
+                            <div class="player-info">
+                                <h3>Your Game</h3>
+                                <div class="stat">Score: <span id="player-score">0</span></div>
+                                <div class="stat">Lines: <span id="player-lines">0</span></div>
+                                <div class="stat">Level: <span id="player-level">1</span></div>
+                            </div>
+                            <div class="player-info">
+                                <h3>Opponent</h3>
+                                <div class="stat">Score: <span id="opponent-score">0</span></div>
+                                <div class="stat">Lines: <span id="opponent-lines">0</span></div>
+                                <div class="stat">Level: <span id="opponent-level">1</span></div>
+                            </div>
+                        </div>
+
+                        <div class="boards-container">
+                            <div class="game-board-player">
+                                <h4>Your Board</h4>
+                                <canvas id="player-canvas" width="300" height="600" class="tetris-canvas"></canvas>
+                            </div>
+                            <div class="game-board-opponent">
+                                <h4>Opponent's Board</h4>
+                                <canvas id="opponent-canvas" width="300" height="600" class="tetris-canvas"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="game-controls">
+                            <button class="btn btn-secondary" onclick="pauseGame()">Pause</button>
+                            <button class="btn btn-danger" onclick="endGame()">Quit Game</button>
+                        </div>
+
+                        <div class="instructions">
+                            <h4>Controls:</h4>
+                            <p>← → : Move | ↓ : Drop | Space : Rotate | P : Pause</p>
+                        </div>
+                    </div>
+
+                    <!-- Join Game Dialog -->
+                    <div id="join-game-section" class="hidden dialog-section">
+                        <h2>Available Games</h2>
+                        <div id="available-games-list" class="games-list">
+                            <!-- Will be populated dynamically -->
+                        </div>
+                        <button class="btn btn-secondary" onclick="backToMenu()">Back to Menu</button>
+                    </div>
+
+                    <!-- Statistics Section -->
+                    <div id="stats-section" class="hidden stats-section">
+                        <h2>Your Statistics</h2>
+                        <div class="stats-container">
+                            <div class="stat-box">
+                                <h4>High Score</h4>
+                                <p id="stat-high-score">0</p>
+                            </div>
+                            <div class="stat-box">
+                                <h4>Total Games</h4>
+                                <p id="stat-total-games">0</p>
+                            </div>
+                            <div class="stat-box">
+                                <h4>Total Wins</h4>
+                                <p id="stat-total-wins">0</p>
+                            </div>
+                            <div class="stat-box">
+                                <h4>Win Rate</h4>
+                                <p id="stat-win-rate">0%</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary" onclick="backToMenu()">Back to Menu</button>
+                    </div>
+
+                    <!-- Game History Section -->
+                    <div id="history-section" class="hidden history-section">
+                        <h2>Game History</h2>
+                        <div id="history-list" class="history-list">
+                            <!-- Will be populated dynamically -->
+                        </div>
+                        <button class="btn btn-secondary" onclick="backToMenu()">Back to Menu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
