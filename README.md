@@ -1,6 +1,6 @@
 # Multiplayer Tetris Game - Spring Boot Edition
 
-A modern, real-time multiplayer Tetris game built with **Spring Boot**, **Spring Security**, and **WebSockets**. This project demonstrates enterprise-grade Java development practices with authentication, real-time communication, and game state management.
+A modern, real-time multiplayer Tetris game built with **Spring Boot**, **Spring Security**, and **WebSockets**. This project demonstrates enterprise-grade Java development practices with authentication, real-time communication, and game state management. This project is still a Work-In-Progress and will therefore not yet have all listed features implemented. This is a large project to take on, and I'm working solo when I'm not at work at my main job, so it's still got a lot of parts that need developed before it's ready to launch.
 
 ## 🎮 Features
 
